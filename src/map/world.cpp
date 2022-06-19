@@ -2,27 +2,23 @@
 
 #include <cstdlib>
 #include <filesystem>
+#include <memory>
 
 #include "types.hpp"
 #include "loader.hpp"
 
-World::World(std::filesystem::path filename) {
+World::World(std::filesystem::path file) {
 	map_meta meta;
 	map_player_info player_info;
 
 	try {
-		load_file(filename);
-		load_meta(&meta);
-		load_player_info(&player_info);
-		data = load_map();
+		std::unique_ptr<Loader> loader(load_file(file));
+		loader->load_meta(&meta);
+		loader->load_player_info(&player_info);
+		data = loader->load_map();
 	} catch (const std::exception &e) {
-		if (is_loaded()) {
-			close_file();
-		}
 		throw;
 	}
-
-	close_file();
 
 	xdim = meta.xdim;
 	ydim = meta.ydim;

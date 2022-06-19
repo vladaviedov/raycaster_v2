@@ -16,7 +16,7 @@ class World {
 
 		world_cell_t **data;
 	public:
-		World(std::filesystem::path filename);
+		World(std::filesystem::path file);
 		~World();
 
 		world_cell_t get_cell(int x, int y);
