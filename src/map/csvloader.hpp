@@ -6,6 +6,8 @@
 #include <memory>
 
 class CsvLoader : public Loader {
+	private:
+		int find_section(const char *name);
 	public:
 		CsvLoader(std::unique_ptr<std::ifstream> f) : Loader(std::move(f)) {}
 

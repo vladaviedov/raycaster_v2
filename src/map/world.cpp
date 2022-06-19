@@ -7,6 +7,7 @@
 #include "types.hpp"
 #include "loader.hpp"
 
+#include <iostream>
 World::World(std::filesystem::path file) {
 	map_meta meta;
 	map_player_info player_info;
@@ -24,6 +25,10 @@ World::World(std::filesystem::path file) {
 	ydim = meta.ydim;
 	xspawn = player_info.xspawn;
 	yspawn = player_info.yspawn;
+
+	std::cerr << "Map name: " << meta.name << std::endl;
+	std::cerr << "Map size: " << xdim << "x" << ydim << std::endl;
+	std::cerr << "Player spawn: " << xspawn << "," << yspawn << std::endl;
 }
 
 World::~World() {
