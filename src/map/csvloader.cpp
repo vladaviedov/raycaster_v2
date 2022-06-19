@@ -69,9 +69,9 @@ void CsvLoader::load_player_info(map_player_info *buf) {
 		std::getline(iss, line, SEPARATOR);
 		if (line == PLAYER_SPAWN) {
 			std::getline(iss, line, SEPARATOR);
-			buf->xspawn = stoi(line);
+			buf->xspawn = stof(line);
 			std::getline(iss, line, SEPARATOR);
-			buf->yspawn = stoi(line);
+			buf->yspawn = stof(line);
 		} else {
 			// End of section
 			break;

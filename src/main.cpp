@@ -4,6 +4,7 @@
 #include <GL/gl.h>
 
 #include "util.hpp"
+#include "logger.hpp"
 #include "map/world.hpp"
 
 void init();
@@ -28,9 +29,11 @@ int main(int argc, char **argv) {
 }
 
 void init() {
+	log_info("Starting Init");
 	try {
 		World world("../maps/test.csv");
 	} catch(const std::exception &e) {
 		fatal(1, e.what());
 	}
+	log_info("Finished Init");
 }
