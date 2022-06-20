@@ -1,11 +1,16 @@
 #include <iostream>
 #include <exception>
+#include <memory>
 #include <GLFW/glfw3.h>
 #include <GL/gl.h>
 
 #include "util.hpp"
 #include "logger.hpp"
 #include "map/world.hpp"
+#include "entities/player.hpp"
+
+std::unique_ptr<World> world = nullptr;
+std::shared_ptr<Player> player = nullptr;
 
 void init();
 
@@ -20,6 +25,7 @@ int main(int argc, char **argv) {
 
 	while (!glfwWindowShouldClose(win)) {
 		glfwSwapBuffers(win);
+		player->render_pov();
 		glfwPollEvents();
 	}
 
@@ -30,10 +36,7 @@ int main(int argc, char **argv) {
 
 void init() {
 	log_info("Starting Init");
-	try {
-		World world("../maps/test_cross.csv");
-	} catch(const std::exception &e) {
-		fatal(1, e.what());
-	}
+	world = std::make_unique<World>("../maps/test_cross.csv");
+	player = world->spawn_player();
 	log_info("Finished Init");
 }
