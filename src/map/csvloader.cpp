@@ -3,6 +3,7 @@
 
 #include <cstring>
 #include <fstream>
+#include <stdexcept>
 #include <string>
 #include <exception>
 
@@ -50,6 +51,9 @@ void CsvLoader::load_meta(map_meta *buf) {
 			break;
 		}
 	}
+
+	xdim = buf->xdim;
+	ydim = buf->ydim;
 }
 
 #define SECT_PLAYER "[player]"
@@ -80,7 +84,61 @@ void CsvLoader::load_player_info(map_player_info *buf) {
 }
 
 #define SECT_WALLS "[walls]"
+#define WALLS_HWALL "hwall"
+#define WALLS_VWALL "vwall"
 
 world_cell_t **CsvLoader::load_map() {
-	return nullptr;
+	if (xdim == 0 || ydim == 0) {
+		throw std::logic_error("csvmap cannot create map without meta");
+	}
+
+	// Allocate map
+	world_cell_t **map = (world_cell_t **)std::calloc(xdim, sizeof(world_cell_t *));
+	if (map == nullptr) {
+		throw std::runtime_error("failed to allocate map");
+	}
+	for (int i = 0; i < xdim; i++) {
+		map[i] = (world_cell_t *)std::calloc(ydim, sizeof(world_cell_t));
+		if (map[i] == nullptr) {
+			throw std::runtime_error("failed to allocate map");
+		}
+	}
+
+	if (find_section(SECT_WALLS) < 0) {
+		return map;
+	}
+	
+	std::string line;
+	while (std::getline(*file, line)) {
+		std::istringstream iss(line);
+		std::getline(iss, line, SEPARATOR);
+		if (line == WALLS_HWALL) {
+			std::getline(iss, line, SEPARATOR);
+			int y = stoi(line);
+			std::getline(iss, line, SEPARATOR);
+			int startx = stoi(line);
+			std::getline(iss, line, SEPARATOR);
+			int endx = stoi(line);
+			
+			for (int i = startx; i < endx; i++) {
+				map[i][y] = ::WALL;
+			}
+		} else if (line == WALLS_VWALL) {
+			std::getline(iss, line, SEPARATOR);
+			int x = stoi(line);
+			std::getline(iss, line, SEPARATOR);
+			int starty = stoi(line);
+			std::getline(iss, line, SEPARATOR);
+			int endy = stoi(line);
+			
+			for (int i = starty; i < endy; i++) {
+				map[x][i] = ::WALL;
+			}
+		} else {
+			// End of section
+			break;
+		}
+	}
+
+	return map;
 }

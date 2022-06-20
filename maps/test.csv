@@ -2,11 +2,11 @@
 name,test
 size,15,15
 [player]
-spawn,5,5
+spawn,5.5,5.5
 [walls]
 hwall,0,0,15
-hwall,0,14,15
+hwall,14,0,15
 vwall,0,0,15
 vwall,14,0,15
-hwall,5,7,5
-vwall,7,5,5
+hwall,7,5,10
+vwall,7,5,10

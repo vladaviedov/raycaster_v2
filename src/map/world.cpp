@@ -28,6 +28,14 @@ World::World(std::filesystem::path file) {
 
 	log_info("Map '%s' loaded (size: %dx%d)", meta.name.c_str(), meta.xdim, meta.ydim);
 	log_info("Player spawn point: (%.1f,%.1f)", xspawn, yspawn);
+	for (int i = 0; i < xdim; i++) {
+#include <sstream>
+		std::stringstream ss;
+		for (int j = 0; j < ydim; j++) {
+			ss << data[i][j] << " ";
+		}
+		log_debug(ss.str().c_str());
+	}
 }
 
 World::~World() {

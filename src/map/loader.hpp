@@ -10,6 +10,8 @@
 class Loader {
 	protected:
 		std::unique_ptr<std::ifstream> file;
+		int xdim = 0;
+		int ydim = 0;
 
 		Loader(std::unique_ptr<std::ifstream> f) : file(std::move(f)) {};
 	public:
