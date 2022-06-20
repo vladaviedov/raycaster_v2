@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
 void init() {
 	log_info("Starting Init");
 	try {
-		World world("../maps/test.csv");
+		World world("../maps/test_cross.csv");
 	} catch(const std::exception &e) {
 		fatal(1, e.what());
 	}
