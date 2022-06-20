@@ -3,6 +3,7 @@
 #include <memory>
 #include <GLFW/glfw3.h>
 #include <GL/gl.h>
+#include <GL/glu.h>
 
 #include "util.hpp"
 #include "logger.hpp"
@@ -17,7 +18,7 @@ void init();
 int main(int argc, char **argv) {
 	glfwSetErrorCallback(&glfw_error);
 	glfwInit();
-	GLFWwindow *win = glfwCreateWindow(640, 480, "rc2", NULL, NULL);
+	GLFWwindow *win = glfwCreateWindow(1920, 1080, "rc2", NULL, NULL);
 	glfwMakeContextCurrent(win);
 	glfwSwapInterval(1);
 
@@ -25,6 +26,8 @@ int main(int argc, char **argv) {
 
 	while (!glfwWindowShouldClose(win)) {
 		glfwSwapBuffers(win);
+		glClearColor(0.3, 0.3, 0.3, 0);
+		gluOrtho2D(0, 1920, 1080, 0);
 		player->render_pov();
 		glfwPollEvents();
 	}

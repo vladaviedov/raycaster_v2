@@ -3,14 +3,15 @@
 
 #include "entity.hpp"
 
+class World;
 class Player : public Entity {
 	private:
-		double vert_angle;
+		double vert_angle = 0.0;
 	public:
 		double fov = 60.0;
-		int rpd = 3;
+		int rpd = 1;
 
-		Player(double xspawn, double yspawn) : Entity(xspawn, yspawn) {}
+		Player(World &world, double xspawn, double yspawn);
 		~Player() {};
 
 		void render_pov();

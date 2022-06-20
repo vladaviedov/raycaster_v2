@@ -7,9 +7,9 @@
 #include <vector>
 
 #include "types.hpp"
-#include "../entities/entity.hpp"
-#include "../entities/player.hpp"
 
+class Entity;
+class Player;
 class World {
 	private:
 		int xdim;

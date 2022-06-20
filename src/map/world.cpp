@@ -7,6 +7,8 @@
 #include "../logger.hpp"
 #include "types.hpp"
 #include "loader.hpp"
+#include "../entities/entity.hpp"
+#include "../entities/player.hpp"
 
 World::World(std::filesystem::path file) {
 	map_meta meta;
@@ -53,7 +55,7 @@ bool World::is_solid_xy(int x, int y) {
 }
 
 std::shared_ptr<Player> World::spawn_player() {
-	std::shared_ptr<Player> player = std::make_shared<Player>(xspawn, yspawn);
+	std::shared_ptr<Player> player = std::make_shared<Player>(*this, xspawn, yspawn);
 	entities.push_back(player);
 	return player;
 }
