@@ -23,12 +23,13 @@ int main(int argc, char **argv) {
 	glfwMakeContextCurrent(win);
 	glfwSwapInterval(1);
 	glfwSetKeyCallback(win, &key_handler);
+	glClearColor(0.3, 0.3, 0.3, 0);
 	gluOrtho2D(0, 1920, 1080, 0);
 
 	init();
 
 	while (!glfwWindowShouldClose(win)) {
-		glClearColor(0.3, 0.3, 0.3, 0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 		player->update();
 		player->render_pov();
 		glfwSwapBuffers(win);

@@ -1,5 +1,5 @@
-#ifndef RC2_3D_RAYCAST_HPP
-#define RC2_3D_RAYCAST_HPP
+#ifndef RC2_RENDERER_RAYCAST_HPP
+#define RC2_RENDERER_RAYCAST_HPP
 
 #include "../map/world.hpp"
 #include "../map/types.hpp"
@@ -17,4 +17,4 @@ typedef struct {
 
 rc_result cast_ray(World &world, double x0, double y0, double th, int depth);
 
-#endif // RC2_3D_RAYCAST_HPP
+#endif // RC2_RENDERER_RAYCAST_HPP

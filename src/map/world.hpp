@@ -24,6 +24,7 @@ class World {
 		World(std::filesystem::path file);
 		~World();
 
+		void get_size(int *xdim, int *ydim);
 		world_cell_t get_cell(int x, int y);
 		bool is_solid_xy(int x, int y);
 		std::shared_ptr<Player> spawn_player();

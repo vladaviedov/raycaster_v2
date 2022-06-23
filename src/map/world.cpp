@@ -38,6 +38,11 @@ World::~World() {
 
 /* Public */
 
+void World::get_size(int *xdim, int *ydim) {
+	*xdim = this->xdim;
+	*ydim = this->ydim;
+}
+
 world_cell_t World::get_cell(int x, int y) {
 	// Check for out of bounds
 	if (x < 0 || y < 0) {

@@ -19,6 +19,37 @@
 void set_color(rc_result &ray);
 void draw_line(double width, double height, double startx);
 
+void render_2d(World &world, double x, double y, double th) {
+	int xdim, ydim;
+	world.get_size(&xdim, &ydim);
+	for (int x = 0; x < xdim; x++) {
+		int xs = x * 32;
+		for (int y = 0; y < ydim; y++) {
+			int ys = y * 32;
+			world_cell_t cell = world.get_cell(x, y);
+			
+			if (cell == WALL) {
+				glColor3d(0.3, 0.5, 0.3);
+			} else {
+				glColor3d(0.0, 0.0, 0.0);
+			}
+
+			glBegin(GL_QUADS);
+			glVertex2i(xs + 1, ys + 1);
+			glVertex2i(xs + 1, ys + 32 - 1);
+			glVertex2i(xs + 32 - 1, ys + 32 - 1);
+			glVertex2i(xs + 32 - 1, ys + 1);
+			glEnd();
+		}
+	}
+
+	glColor3d(1.0, 1.0, 0);
+	glPointSize(16);
+	glBegin(GL_POINTS);
+	glVertex2d(x * 32, y * 32);
+	glEnd();
+}
+
 void render_3d(World &world, double x, double y, double th, double al, double depth, double fov, int rpd) {
 	if (fov * rpd != round(fov * rpd)) {
 		throw std::logic_error("Ray count (fov * rpd) must be an integer");
