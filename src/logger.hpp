@@ -6,9 +6,9 @@ typedef enum {
 	INFO,
 	WARN,
 	ERROR
-} logl;
+} loglev;
 
-void log_write(logl lvl, const char *format, ...);
+void log_write(loglev lvl, const char *format, ...);
 #define log_debug(...) log_write(::DEBUG, __VA_ARGS__)
 #define log_info(...) log_write(::INFO, __VA_ARGS__)
 #define log_warn(...) log_write(::WARN, __VA_ARGS__)

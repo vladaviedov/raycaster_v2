@@ -9,6 +9,7 @@
 #include "logger.hpp"
 #include "map/world.hpp"
 #include "entities/player.hpp"
+#include "input/handler.hpp"
 
 std::unique_ptr<World> world = nullptr;
 std::shared_ptr<Player> player = nullptr;
@@ -21,14 +22,16 @@ int main(int argc, char **argv) {
 	GLFWwindow *win = glfwCreateWindow(1920, 1080, "rc2", NULL, NULL);
 	glfwMakeContextCurrent(win);
 	glfwSwapInterval(1);
+	glfwSetKeyCallback(win, &key_handler);
+	gluOrtho2D(0, 1920, 1080, 0);
 
 	init();
 
 	while (!glfwWindowShouldClose(win)) {
-		glfwSwapBuffers(win);
 		glClearColor(0.3, 0.3, 0.3, 0);
-		gluOrtho2D(0, 1920, 1080, 0);
+		player->update();
 		player->render_pov();
+		glfwSwapBuffers(win);
 		glfwPollEvents();
 	}
 

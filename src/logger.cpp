@@ -5,19 +5,19 @@
 #include <sstream>
 #include <map>
 
-static const std::map<logl, const char *> logl_str = {
+static const std::map<loglev, const char *> loglev_str = {
 	{ ::DEBUG, "DEBUG" },
 	{ ::INFO, "INFO " },
 	{ ::WARN, "WARN " },
 	{ ::ERROR, "ERROR" }
 };
 
-void log_write(logl lvl, const char *format, ...) {
+void log_write(loglev lvl, const char *format, ...) {
 	va_list args;
 	va_start(args, format);
 
 	std::stringstream log_str;
-	log_str << std::string(logl_str.find(lvl)->second)
+	log_str << std::string(loglev_str.find(lvl)->second)
 		<< " | "
 		<< std::string(format)
 		<< std::endl;

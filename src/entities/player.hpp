@@ -14,6 +14,7 @@ class Player : public Entity {
 		Player(World &world, double xspawn, double yspawn);
 		~Player() {};
 
+		virtual void update();
 		void render_pov();
 };
 
