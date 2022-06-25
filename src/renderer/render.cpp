@@ -6,8 +6,8 @@
 #include <GL/gl.h>
 
 #define DEG (M_PI / 180)
-#define TAU (M_PI * 2)
 
+#include "../util.hpp"
 #include "../map/types.hpp"
 #include "../map/world.hpp"
 #include "raycast.hpp"
@@ -18,10 +18,13 @@
 
 void set_color(rc_result &ray);
 void draw_line(double width, double height, double startx);
+void draw_ray(double p_x, double p_y, double r_x, double r_y);
 
 void render_2d(World &world, double x, double y, double th) {
 	int xdim, ydim;
 	world.get_size(&xdim, &ydim);
+
+	// Draw map
 	for (int x = 0; x < xdim; x++) {
 		int xs = x * 32;
 		for (int y = 0; y < ydim; y++) {
@@ -43,11 +46,35 @@ void render_2d(World &world, double x, double y, double th) {
 		}
 	}
 
+	// Draw player
 	glColor3d(1.0, 1.0, 0);
 	glPointSize(16);
 	glBegin(GL_POINTS);
 	glVertex2d(x * 32, y * 32);
 	glEnd();
+}
+
+#include "../logger.hpp"
+void render_2d_rays(World &world, double x, double y, double th, double depth, double fov, int rpd) {
+	render_2d(world, x, y, th);
+	if (fov * rpd != round(fov * rpd)) {
+		throw std::logic_error("Ray count (fov * rpd) must be an integer");
+	}
+
+	double start_th = th - (fov / 2.0) * DEG;
+	glColor3d(1.0, 0.0, 0.0);
+	glLineWidth(2);
+	for (int i = 0; i < fov * rpd; i++) {
+		double r_th = start_th + i * (1.0 / rpd) * DEG;
+		r_th = wrap_angle(r_th);
+		double d_th = th - r_th;
+
+		rc_result ray = cast_ray(world, x, y, r_th, depth);
+		if (ray.distance == HUGE_VAL) continue;
+
+		draw_ray(x, y, x + ray.distance * cos(r_th), y + ray.distance * sin(r_th));
+	}
+
 }
 
 void render_3d(World &world, double x, double y, double th, double al, double depth, double fov, int rpd) {
@@ -59,13 +86,13 @@ void render_3d(World &world, double x, double y, double th, double al, double de
 	const double line_width = WIDTH / (fov * rpd);
 	for (int i = 0; i < fov * rpd; i++) {
 		double r_th = start_th + i * (1.0 / rpd) * DEG;
-		if (r_th < 0) r_th += TAU;
-		if (r_th > TAU) r_th -= TAU;
+		r_th = wrap_angle(r_th);
 		double d_th = th - r_th;
 
 		rc_result ray = cast_ray(world, x, y, r_th, depth);
 		if (ray.distance == HUGE_VAL) continue;
 		double real_distance = ray.distance * cos(d_th);
+		if (th == r_th) log_debug("Center Ray: %.2f", real_distance);
 
 		double height = HEIGHT / real_distance;
 		if (height > HEIGHT) height = HEIGHT;
@@ -97,5 +124,12 @@ void draw_line(double width, double height, double startx) {
 	glVertex2d(startx + width, HEIGHT / 2.0 - height / 2.0);
 	glVertex2d(startx + width, HEIGHT / 2.0 + height / 2.0);
 	glVertex2d(startx, HEIGHT / 2.0 + height / 2.0);
+	glEnd();
+}
+
+void draw_ray(double p_x, double p_y, double r_x, double r_y) {
+	glBegin(GL_LINES);
+	glVertex2d(32 * p_x, 32 * p_y);
+	glVertex2d(32 * r_x, 32 * r_y);
 	glEnd();
 }

@@ -4,6 +4,7 @@
 #include "../map/world.hpp"
 
 void render_2d(World &world, double x, double y, double th);
+void render_2d_rays(World &world, double x, double y, double th, double depth, double fov, int rpd);
 void render_3d(World &world, double x, double y, double th, double al, double depth, double fov, int rpd);
 
 #endif // RC2_RENDERER_RENDER_HPP

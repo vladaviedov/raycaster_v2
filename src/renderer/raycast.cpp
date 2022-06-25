@@ -66,7 +66,7 @@ rc_result cast_vert(World &world, double x0, double y0, double th, int depth) {
 	}
 
 	// Direction is flipped, because OpenGL coordinates are flipped
-	const int r_direction = (th < M_PI / 2 || th > 3 * M_PI / 2) ? -1 : 1;
+	const int r_direction = (th > M_PI / 2 && th < 3 * M_PI / 2) ? -1 : 1;
 	int r_depth = 0;
 	double r_x;
 	double r_y;
@@ -94,5 +94,6 @@ rc_result cast_vert(World &world, double x0, double y0, double th, int depth) {
 		res.cell = world.get_cell(cell_x, r_y);
 		res.distance = sqrt((r_x - x0) * (r_x - x0) + (r_y - y0) * (r_y - y0));
 	}
+
 	return res;
 }

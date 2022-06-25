@@ -13,9 +13,9 @@ Entity::Entity(World &world, double xspawn, double yspawn) :
 
 #include "../logger.hpp"
 void Entity::update(double dt) {
-	log_debug("Velocity Vector: %.2f @ %.2f", velocity.get_r(), velocity.get_th());
+//	log_debug("Velocity Vector: %.2f @ %.2f", velocity.get_r(), velocity.get_th());
 	Vector friction = Vector::make_polar(velocity.get_r(), velocity.get_th() + M_PI);
-	log_debug("Friction Force: %.2f @ %.2f", friction.get_r(), friction.get_th());
+//	log_debug("Friction Force: %.2f @ %.2f", friction.get_r(), friction.get_th());
 	forces.push_back(friction);
 
 	for (auto &f : forces) {

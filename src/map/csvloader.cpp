@@ -93,15 +93,10 @@ world_cell_t **CsvLoader::load_map() {
 	}
 
 	// Allocate map
-	world_cell_t **map = (world_cell_t **)std::calloc(xdim, sizeof(world_cell_t *));
-	if (map == nullptr) {
-		throw std::runtime_error("failed to allocate map");
-	}
+	world_cell_t **map = new world_cell_t *[xdim];
 	for (int i = 0; i < xdim; i++) {
-		map[i] = (world_cell_t *)std::calloc(ydim, sizeof(world_cell_t));
-		if (map[i] == nullptr) {
-			throw std::runtime_error("failed to allocate map");
-		}
+		map[i] = new world_cell_t[ydim];
+		memset(map[i], ::VOID, ydim * sizeof(world_cell_t));
 	}
 
 	if (find_section(SECT_WALLS) < 0) {
