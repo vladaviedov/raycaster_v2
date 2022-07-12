@@ -69,7 +69,11 @@ void Vector::set_cart(double x, double y) {
 	round();
 }
 
+#include "../logger.hpp"
 void Vector::set_polar(double r, double th) {
+	log_debug("Inputs: %.2f @ %.2f", r, th);
+	log_debug("X: %.2f; Y: %.2f", cos(th), sin(th));
+
 	this->x = r * cos(th);
 	this->y = r * sin(th);
 	round();
