@@ -13,8 +13,8 @@
 #include "raycast.hpp"
 
 // Temporary
-#define WIDTH 1920
-#define HEIGHT 1080
+#define WIDTH 2560
+#define HEIGHT 1440
 
 void set_color(rc_result &ray);
 void draw_line(double width, double height, double startx);

@@ -20,12 +20,12 @@ void init();
 int main(int argc, char **argv) {
 	glfwSetErrorCallback(&glfw_error);
 	glfwInit();
-	GLFWwindow *win = glfwCreateWindow(1920, 1080, "rc2", NULL, NULL);
+	GLFWwindow *win = glfwCreateWindow(2560, 1440, "rc2", NULL, NULL);
 	glfwMakeContextCurrent(win);
 	glfwSwapInterval(1);
 	glfwSetKeyCallback(win, &key_handler);
 	glClearColor(0.3, 0.3, 0.3, 0);
-	gluOrtho2D(0, 1920, 1080, 0);
+	gluOrtho2D(0, 2560, 1440, 0);
 
 	init();
 
