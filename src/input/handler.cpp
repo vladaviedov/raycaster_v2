@@ -14,7 +14,6 @@ bool key_d = false;
 
 void set_key_state(int key, bool state);
 
-#include "../logger.hpp"
 void key_handler(GLFWwindow *win, int key, int scancode, int action, int mod) {
 	if (action == GLFW_PRESS) {
 		set_key_state(key, true);
@@ -28,19 +27,31 @@ void mouse_handler(GLFWwindow *win, double xpos, double ypos) {
 }
 
 double get_move_angle() {
-	if (key_w && !key_s && !key_d && !key_a) {
+	if (key_w && !key_a && !key_s && !key_d) {
 		return 0;
 	}
-	if (key_s && !key_w && !key_d && !key_a) {
-		return M_PI;
+	if (key_w && !key_a && !key_s && key_d) {
+		return M_PI / 4;
 	}
-	if (key_d && !key_w && !key_s && !key_a) {
+	if (!key_w && !key_a && !key_s && key_d) {
 		return M_PI / 2;
 	}
-	if (key_a && !key_w && !key_s && !key_d) {
+	if (!key_w && !key_a && key_s && key_d) {
+		return 3 * M_PI / 4;
+	}
+	if (!key_w && !key_a && key_s && !key_d) {
+		return M_PI / 2;
+	}
+	if (!key_w && key_a && key_s && !key_d) {
+		return 5 * M_PI / 4;
+	}
+	if (!key_w && key_a && !key_s && !key_d) {
 		return 3 * M_PI / 2;
 	}
-	
+	if (key_w && key_a && !key_s && !key_d) {
+		return 7 * M_PI / 4;
+	}
+
 	return -1;
 }
 
