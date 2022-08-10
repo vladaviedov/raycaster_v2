@@ -1,4 +1,5 @@
 #include "vector.hpp"
+#include <math.h>
 
 #define _USE_MATH_DEFINES
 #include <cmath>
@@ -60,7 +61,8 @@ double Vector::get_th() {
 		if (x > 0) return 0;
 		if (x < 0) return M_PI;
 	}
-	return wrap_angle(atan(y / x));
+
+	return wrap_angle(atan2(y, x));
 }
 
 void Vector::set_cart(double x, double y) {
@@ -69,11 +71,7 @@ void Vector::set_cart(double x, double y) {
 	round();
 }
 
-#include "../logger.hpp"
 void Vector::set_polar(double r, double th) {
-	log_debug("Inputs: %.2f @ %.2f", r, th);
-	log_debug("X: %.2f; Y: %.2f", cos(th), sin(th));
-
 	this->x = r * cos(th);
 	this->y = r * sin(th);
 	round();
