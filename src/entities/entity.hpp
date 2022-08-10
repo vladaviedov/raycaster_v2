@@ -13,7 +13,7 @@ class Entity {
 		// Physics
 		Vector position;
 		Vector velocity;
-		std::vector<Vector> forces;
+		Vector friction_force;
 		double inertia = 1.0;
 
 		Entity(World &world, double xpos, double ypos);

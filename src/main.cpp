@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <iostream>
 #include <exception>
 #include <memory>
@@ -30,6 +31,7 @@ int main(int argc, char **argv) {
 
 	while (!glfwWindowShouldClose(win)) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
+//		usleep(100000);
 		player->update(0.1);
 		player->render_pov();
 		glfwSwapBuffers(win);

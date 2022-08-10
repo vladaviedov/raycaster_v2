@@ -54,7 +54,6 @@ void render_2d(World &world, double x, double y, double th) {
 	glEnd();
 }
 
-#include "../logger.hpp"
 void render_2d_rays(World &world, double x, double y, double th, double depth, double fov, int rpd) {
 	render_2d(world, x, y, th);
 	if (fov * rpd != round(fov * rpd)) {
@@ -92,7 +91,6 @@ void render_3d(World &world, double x, double y, double th, double al, double de
 		rc_result ray = cast_ray(world, x, y, r_th, depth);
 		if (ray.distance == HUGE_VAL) continue;
 		double real_distance = ray.distance * cos(d_th);
-		if (th == r_th) log_debug("Center Ray: %.2f", real_distance);
 
 		double height = HEIGHT / real_distance;
 		if (height > HEIGHT) height = HEIGHT;
