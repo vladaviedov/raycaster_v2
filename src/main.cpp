@@ -23,7 +23,10 @@ int main(int argc, char **argv) {
 	GLFWwindow *win = glfwCreateWindow(2560, 1440, "rc2", NULL, NULL);
 	glfwMakeContextCurrent(win);
 	glfwSwapInterval(1);
+	glfwSetInputMode(win, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetInputMode(win, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
 	glfwSetKeyCallback(win, &key_handler);
+	glfwSetCursorPosCallback(win, &mouse_handler);
 	glClearColor(0.3, 0.3, 0.3, 0);
 	gluOrtho2D(0, 2560, 1440, 0);
 
